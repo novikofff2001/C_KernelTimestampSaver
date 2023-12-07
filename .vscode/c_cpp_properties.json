@@ -1,14 +1,17 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Linux Kernel",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/src/linux-headers-6.2.0-33-generic/include/",
-                "/usr/src/linux-headers-6.2.0-33-generic/arch/x86/include/",
-                "/usr/src/linux-headers-6.2.0-33-generic/arch/x86/include/generated"
+                "/usr/src/linux-headers-6.5.0-14-generic/include/",
+                "/usr/src/linux-headers-6.5.0-14-generic/arch/x86/include/",
+                "/usr/src/linux-headers-6.5.0-14-generic/arch/x86/include/generated"
             ],
-            "defines": [],
+            "defines": [            
+                "__KERNEL__",
+                "MODULE"
+            ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",
