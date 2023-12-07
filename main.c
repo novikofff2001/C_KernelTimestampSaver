@@ -30,7 +30,7 @@ MODULE_AUTHOR("Your Name");
 MODULE_DESCRIPTION("A Linux kernel module to write time to specified path and system log within delay.");
 MODULE_VERSION("1.0");
 
-const char* timestamp_path = "/home/nikit/current_time";
+const char* timestamp_path = "/tmp/current_time";
 const size_t delay = 60000; // in milliseconds
 
 static struct timer_list my_timer;
