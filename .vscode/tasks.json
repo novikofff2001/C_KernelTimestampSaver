@@ -1,0 +1,37 @@
+{
+	"version": "2.0.0",
+    "tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "make",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "install",
+			"type": "shell",
+			"command": "sudo insmod ./main.ko",
+			"problemMatcher": []
+		},
+		{
+			"label": "remove",
+			"type": "shell",
+			"command": "sudo rmmod main",
+			"problemMatcher": []
+		},
+		{
+			"label": "open kernel journal",
+			"type": "shell",
+			"command": "sudo dmesg | tail",
+			"problemMatcher": []
+		},
+		{
+			"label": "clean",
+			"type": "shell",
+			"command": "make clean"
+		}
+	]
+}
