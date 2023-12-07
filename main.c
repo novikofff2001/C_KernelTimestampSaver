@@ -26,7 +26,7 @@ https://www.tianocore.org/
 #include <linux/file.h>         // For struct file
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Your Name");
+MODULE_AUTHOR("Nikita Novikov");
 MODULE_DESCRIPTION("A Linux kernel module to write time to specified path and system log within delay.");
 MODULE_VERSION("1.0");
 
