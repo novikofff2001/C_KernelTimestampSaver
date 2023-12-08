@@ -12,7 +12,7 @@ MODULE_DESCRIPTION("A Linux kernel module to write time to specified path and sy
 MODULE_VERSION("1.0");
 
 const char* timestamp_path = "/tmp/current_time";
-const size_t delay = 5000; // in milliseconds
+const size_t delay = 60000; // in milliseconds
 
 static struct timer_list my_timer;
 static char time_buffer[6]; // Buffer to hold time string
