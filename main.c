@@ -12,7 +12,7 @@ MODULE_DESCRIPTION("A Linux kernel module to write time to specified path and sy
 MODULE_VERSION("1.0");
 
 const char* timestamp_path = "/tmp/current_time";
-const size_t delay = 60000; // in milliseconds
+const size_t delay = 5000; // in milliseconds
 
 static struct timer_list my_timer;
 static char time_buffer[6]; // Buffer to hold time string
@@ -37,21 +37,22 @@ static void update_time(struct timer_list *t) {
     // Set up the timer for the next minute
     mod_timer(t, jiffies + msecs_to_jiffies(delay));
 
-    // Write time to a file in /tmp
-    struct file *f = filp_open(timestamp_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (!IS_ERR(f)) {
-        loff_t pos = 0;
-        ssize_t written = kernel_write(f, time_buffer, 5, &pos);
-        if (written < 0) {
-            printk(KERN_ERR "Failed to write to file %s\n", timestamp_path);
-        } else {
-            vfs_fsync(f, 0);
-            printk(KERN_INFO "Wrote current Time(%s) to the timestamp path(%s)\n", time_buffer, timestamp_path);
-        }
-        filp_close(f, NULL);
-    } else {
+    struct file *f = filp_open(timestamp_path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+    if (IS_ERR(f)) {
         printk(KERN_ERR "Failed to open file %s\n", timestamp_path);
+        return;
     }
+
+    // Write time to a file in /tmp
+    loff_t pos = 0;
+    ssize_t written = kernel_write(f, time_buffer, 5, &pos);
+
+    if (written < 0) {
+        printk(KERN_ERR "Failed to write to file %s\n", timestamp_path);
+    } else {
+        printk(KERN_INFO "Wrote current Time(%s) to the timestamp path(%s)\n", time_buffer, timestamp_path);
+    }
+    filp_close(f, NULL);
 }
 
 static int __init time_module_init(void) {

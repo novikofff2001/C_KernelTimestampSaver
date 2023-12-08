@@ -1,0 +1,1 @@
+savedcmd_/home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/main.mod := printf '%s\n'   main.o | awk '!x[$$0]++ { print("/home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/"$$0) }' > /home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/main.mod
