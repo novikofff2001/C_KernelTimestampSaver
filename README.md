@@ -1,39 +1,38 @@
 ---
-# 🛠 Linux Kernel Module: Message Decryptor
+# 🛠 Linux Kernel Module: Current Time Writer
 
-A sleek and efficient Linux kernel module that decrypts messages and logs them to the kernel journal.
+A Linux kernel module that writes the current time to a specified path in your computer's filesystem.
 
 ## 📦 Installation
 
-1. **Include the Kernel Module:** Add the kernel module to your Linux setup to start.
+1. **Include the Kernel Module:** Simply add the kernel module to your Linux environment.
 
 ## 🚀 Usage
 
-To deploy the kernel module, you'll need to follow certain steps to ensure smooth integration.
+Implementing the kernel module involves a few key steps for successful integration.
 
 ### Step-by-Step Guide
 
-1. **Insert the Kernel Module**: Use the `insmod` command to insert the module into the kernel.
-2. **Check dmesg Logs**: After inserting the module, view the decrypted messages in the kernel log using `dmesg`.
-3. **Remove the Module**: Use the `rmmod` command to remove the kernel module when done.
+1. **Load the Kernel Module**: Utilize the `insmod` command to load the module into your Linux kernel.
+2. **Verify Operation with dmesg Logs**: After loading the module, confirm its operation by checking the kernel log with `dmesg`.
+3. **Unload the Module**: When you no longer need the module, remove it using the `rmmod` command.
 
-#### Important Commands:
+#### Essential Commands:
 
-- `insmod <module_name.ko>`: Insert the kernel module.
-- `dmesg | tail`: View the latest kernel log messages.
-- `rmmod <module_name>`: Remove the kernel module.
+- `insmod <module_name.ko>`: Load the kernel module into the system.
+- `dmesg | tail`: Display recent entries in the kernel log.
+- `rmmod <module_name>`: Unload the kernel module from the system.
 
 ## 📝 Example
 
-Here's a quick rundown to get you started:
+To get started, here's a simple example:
 
 ```bash
 $ insmod main.ko
 $ dmesg | tail
-# Decrypted messages and other kernel logs will be displayed
+# View the current time output and other kernel logs
 $ rmmod main
 ```
 
-## 🎯 **What Happens Next?**
-- **Success**: After inserting the module, the decrypted messages will start appearing in the kernel journal.
-- **Failure**: If there's an error, the kernel journal (`dmesg`) will contain the error details. Ensure you read the logs to understand any possible issues.
+## ⚠️ Caution
+The kernel module retrieves the current UTC time. It does not automatically adjust for your local timezone. You will need to manually change the `timezone_offset` variable in the module to match your local timezone offset (including daylight saving time if applicable).

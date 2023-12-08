@@ -1,22 +1,3 @@
-/*
-Никита, задачи ниже.
-Нужно что-то одно. Линукс наверное в приоритете.
-
-По Linux:
-Написать модуль ядра линукс, который каждую минуту сохраняет текущее время в файле /tmp/current_time в формате hh:mm (например, 11:58 или 22:07).
-
-По UEFI:
-Написать программу для запуска в среде EFI Shell (есть эмулятор), которая находит все съёмные носители в системе и выводит их системные пути (device path).
-Перед тем, как приступить к решению проверочной задачи, изучите пожалуйста спецификацию UEFI.
-Хотя бы общее представление, механизмы тестирования: 
- Можно ориентироваться на EDK2.
-https://www.tianocore.org/ 
-В качестве эмулятора можно использовать QEMU, либо любая виртуальная машина с UEFI, любой реальный компьютер с UEFI. 
-В EDK2 описано, как это сделать. 
-Проверять нужно в EFI Shell.
-
-Будут вопросы, то постараюсь ответить)
-*/
 #include <linux/module.h>       // Needed by all modules
 #include <linux/kernel.h>       // Needed for KERN_INFO
 #include <linux/init.h>         // Needed for the macros
@@ -36,6 +17,10 @@ const size_t delay = 60000; // in milliseconds
 static struct timer_list my_timer;
 static char time_buffer[6]; // Buffer to hold time string
 
+static int timezone_offset = 180; // Timezone offset in minutes (GMT+3 for Moscow)
+module_param(timezone_offset, int, 0644);
+MODULE_PARM_DESC(timezone_offset, "Offset in minutes from UTC");
+
 // Function to update time
 static void update_time(struct timer_list *t) {
     struct timespec64 ts;
@@ -43,6 +28,7 @@ static void update_time(struct timer_list *t) {
     
     // Get the current time
     ktime_get_real_ts64(&ts);
+    ts.tv_sec += timezone_offset * 60; // Adjust time with GMT offset in seconds
     time64_to_tm(ts.tv_sec, 0, &tm);
 
     // Format the time into the buffer
@@ -52,7 +38,7 @@ static void update_time(struct timer_list *t) {
     mod_timer(t, jiffies + msecs_to_jiffies(delay));
 
     // Write time to a file in /tmp
-    struct file *f = filp_open(timestamp_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+    struct file *f = filp_open(timestamp_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (!IS_ERR(f)) {
         loff_t pos = 0;
         ssize_t written = kernel_write(f, time_buffer, 5, &pos);
