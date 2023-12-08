@@ -1,1 +1,0 @@
-savedcmd_/home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/modules.order := {   echo /home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/main.o; :; } > /home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/modules.order

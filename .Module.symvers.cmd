@@ -1,1 +1,0 @@
-savedcmd_/home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/Module.symvers -T /home/nikit/Documents/vscode/projects/C/Kernel_TimestampSaver/modules.order -i Module.symvers -e 
